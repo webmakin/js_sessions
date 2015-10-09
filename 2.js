@@ -1,23 +1,25 @@
 //2.js
 
-//methods
-//Properties that contain functions are generally called methods of the value they belong to. As in, "toUpperCase is a method of a string which is a builtin".
+/*
+methods are member functions of an object. A method allows you to operate on an
+object */
 var mack = [];
 mack.push("Mack");
-//when used on objects
+
+// "Object" can
 var rabbit = {};
 rabbit.speak = function (line) {
-    console.log("The rabbit says '"+line+"'");
+  console.log("The rabbit says '" + line + "'");
 };
 rabbit.speak("I'm alive."); //The rabbit says 'I'm alive.'
 
 //objects
 //Values of the type object are arbitrary collections of properties
 var person = {
-    name: 'Asif',
-    city: 'Bangalore',
-    fav_bands: { 'Tool', 'A perfect circle' }
-}
+  name: 'Asif',
+  city: 'Bangalore',
+  fav_bands: ['Tool', 'A perfect circle' ]
+};
 person.interests = ['Reading', 'Games', 'Travelling'];
 //objects are mutable
 var object1 = { value : 10};
@@ -30,40 +32,42 @@ console.log(object1); //null
 console.log(object2); //Object { value=10}
 
 // Objects can contain methods.
-var myObj = {
-    myFunc: function(){
-        return "Hello world!";
-    }
+var my_obj = {
+  myFunc: function(){
+    return "Hello world!";
+  }
 };
-myObj.myFunc(); //  "Hello world!"
+my_obj.myFunc(); //  "Hello world!"
 
 // When functions attached to an object are called, they can access the object
 // they're attached to using the `this` keyword.
-myObj = {
-    myString: "Hello world!",
-    myFunc: function(){
-        return this.myString;
-    }
+my_obj = {
+  my_string: "Hello world!",
+  myFunc: function(){
+    return this.my_string;
+  }
 };
-myObj.myFunc(); //  "Hello world!"
+my_obj.myFunc(); //  "Hello world!"
 
-//since the context of object is important when a call is made to a function inside it the below doesnt work
-var myFunc = myObj.myFunc;
-myFunc(); // undefined
+//since the context of object is important when a call is made to a function
+//inside it the below doesnt work
+var my_func = my_obj.myFunc;
+my_func(); // undefined
 
-//however we can assign a function to an existing object and get access to its properties using 'this' keyword
+//however we can assign a function to an existing object and get access to its
+//properties using 'this' keyword
 var myOtherFunc = function(){
-    return this.myString.toUpperCase();
+  return this.my_string.toUpperCase();
 }
-myObj.myOtherFunc = myOtherFunc;
-myObj.myOtherFunc(); //  "HELLO WORLD!"
+my_obj.myOtherFunc = myOtherFunc;
+my_obj.myOtherFunc(); //  "HELLO WORLD!"
 
 //another way of creating an object is using constructor
 var MyConstructor = function(){
-    this.myNumber = 5;
+  this.my_number = 5;
 }
-myNewObj = new MyConstructor(); // {myNumber: 5}
-myNewObj.myNumber; // 5
+var my_new_obj = new MyConstructor(); // {myNumber: 5}
+my_new_obj.myNumber; // 5
 
 //some interesting array methods
 console.log([1,2,3,2,1].indexOf(2)); // 1
@@ -77,26 +81,28 @@ console.log(string.length); // 3
 console.log(string.charAt(0)); // a
 console.log(string[1]); // b
 //math
-Math.max (maximum)
-Math.min (minimum)
-Math.sqrt (squareroot)
-Math.random()
-Math.floor()
+Math.max(10, -100);
+Math.min(56, 42);
+Math.sqrt(49);
+Math.random();
+Math.floor();
 
 //global object
-var myVar = 10;
-console.log("myVar" in window); // true
-console.log(window.myVar); // 10
+var my_var = 10;
+console.log("my_var" in window); // true
+console.log(window.my_var); // 10
 
 //implementing our own array methods
 function remove(array,index){
-    return array.slice(0,index).concat(array.slice(index+1));
+  return array.slice(0,index)
+	  .concat(array.slice(index+1));
 }
 console.log(remove(["a","b","c","d","e"],2)); // ["a","b","d","e"]
 
 function forEach(array, action){
-    for(var i = 0;i < array.length; i++)
-        action(array[i]);
+  for(var i = 0;i < array.length; i++){
+    action(array[i]);
+	}
 }
 forEach(["Wampeter","Foma","Granfalloon"], console.log);//  Wampeter  Foma  Granfalloon
 //similarly filter, map, reduce etc
@@ -104,89 +110,95 @@ forEach(["Wampeter","Foma","Granfalloon"], console.log);//  Wampeter  Foma  Gran
 //understanding this keyword better
 //example 1
 function speak (line) {
-    console.log (" The " + this.type + " rabbit says"+"'"+ line + " ' ") ;
+  console.log (" The " + this.type + " rabbit says"+"'"+ line + " ' ") ;
 }
-var whiteRabbit = { type : "white" , speak : speak };
-var fatRabbit = { type : "fat", speak : speak };
+var white_rabbit = { type : "white" , speak : speak };
+var fat_rabbit = { type : "fat", speak : speak };
 
-whiteRabbit.speak("Oh my ears and whiskers , " +" how late it's getting !") ;
+white_rabbit.speak("Oh my ears and whiskers , " + " how late it's getting !") ;
 //  The white rabbit says ' Oh my ears and whiskers , how late it's getting ! '
-fatRabbit.speak("I could sure use a carrot right now.") ;
+fat_rabbit.speak("I could sure use a carrot right now.") ;
 //  The fat rabbit says 'I could sure use a carrot right now.'
-speak.call(fatRabbit, 'hahahah');
-// The fat rabbit says'hahahah ' 
+speak.call(fat_rabbit, 'hahahah');
+// The fat rabbit says'hahahah '
 speak.call({type:'old'}, 'Oh my god!');
-// The old rabbit says'Oh my god!' 
-speak.apply(fatRabbit, ['Oh my god!']);
+// The old rabbit says'Oh my god!'
+speak.apply(fat_rabbit, ['Oh my god!']);
 
 //example2
-function add(a, b){ 
-  return a + b; 
-} 
-assert(add.call(this, 1, 2) == 3, ".call() takes individual arguments"); 
+function add(a, b){
+  return a + b;
+}
+assert(add.call(this, 1, 2) == 3, ".call() takes individual arguments");
 assert(add.apply(this, [1, 2]) == 3, ".apply() takes an array of arguments");
 
 //bind can be used in two ways, first is to bind to an obj
-var anotherRabbit = speak.bind(fatRabbit);
-typeof anotherRabbit;
-anotherRabbit('hahahah');
+var another_rabbit = speak.bind(fat_rabbit);
+typeof another_rabbit;
+another_rabbit('hahahah');
 //or bind to function
-var product = function(a, b){ return a * b; }
+var product = function(a, b){
+	return a * b;
+};
 var doubler = product.bind(this, 2);
 doubler(8); // 16
 
-//prototypes
-//A prototype is another object that is used as a fallback source of properties.
-//every js object has prototypes
-//example 1
-function Ninja(){} 
-Ninja.prototype.swingSword = function(){ 
-    return true; 
-}; 
-var ninjaA = Ninja(); 
+// prototypes
+// All objects in JavaScript are descended from Object;
+// all objects inherit methods and properties from Object.prototype
+// example 1
+function Ninja(){}
+Ninja.prototype.swingSword = function(){
+  return true;
+};
+var ninjaA = Ninja();
 assert( !ninjaA, "Is undefined, not an instance of Ninja." );  //Pass
-var ninjaB = new Ninja(); 
+var ninjaB = new Ninja();
 assert( ninjaB.swingSword(), "Method exists and is callable." ); //Pass
 
 //example 2
-function Ninja(){ 
-  this.swingSword = function(){ 
-    return true; 
-  }; 
+function Ninja(){
+  this.swingSword = function(){
+    return true;
+  };
 }
-// Should return false, but will be overridden 
-Ninja.prototype.swingSword = function(){ 
-  return false; 
-}; 
-var ninja = new Ninja(); 
+// Should return false, but will be overridden
+Ninja.prototype.swingSword = function(){
+  return false;
+};
+var ninja = new Ninja();
 assert( ninja.swingSword(), "Calling the instance method, not the prototype method." ); //Pass
 //why did it pass?
 //If instance method is not found, prototype methods are checked by the interpreter
 //example 3
-var myObj = function() {
-    myString: "Hello world!"
+my_obj = {
+  my_string: "Hello world!"
+}
+my_obj.prototype = {
+  meaning_of_life: 42,
+  myFunc: function(){
+	  return this.my_string.toLowerCase()
+	}
 };
-myObj.prototype = {
-    meaningOfLife: 42,
-    myFunc: function(){
-        return this.myString.toLowerCase()
-    }
-};
-firstObj = new myObj;
-firstObj.meaningOfLife; //  42
+var first_obj = my_obj;
+first_obj.prototype.meaning_of_life;
 
 // Built-in types like strings and numbers also have constructors that create
 // equivalent wrapper objects.
-var myNumber = 12;
-var myNumberObj = new Number(12);
-myNumber = myNumberObj; //  true
-typeof myNumber; //  'number'
-typeof myNumberObj; //  'object'
-myNumber === myNumberObj; //  false
+var my_number = 12;
+var my_number_obj = new Number(12);
+my_number = my_number_obj; //  true
+typeof my_number; //  'number'
+typeof my_number_obj; //  'object'
+my_number === my_number_obj; //  false
 
-//using which we can add functions to a string, for example
+//using which we can add methods to a string, for example
 String.prototype.firstCharacter = function(){
-    return this.charAt(0);
+  return this.charAt(0);
 }
 "abc".firstCharacter(); // "a"
 //prototypes are used in polyfilling
+
+// Trivia: JS has hoisted objects and native objects.
+// Native objects are Date, String, Number.
+// What are hoisted objects?
